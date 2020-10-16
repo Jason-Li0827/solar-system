@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <!--<script src="https://s2js.com/ojars/FunkcijasSkolai.js"></script>-->
     <style>
         body {
             margin: 10;
@@ -34,7 +33,7 @@
     </style>
 </head>
 
-<body onload="solarSystem()">
+<body onload="setUp()">
     <!--Html elements-->
     <canvas id=myCanvas width=1500 height=1500></canvas>
 
@@ -142,10 +141,18 @@
         function done() {
             console.log("Images loaded!")
         }
+
+        //runs the main function once so that it draws the background image and the planets
+        function setUp() {
+            solarSystem();
+            pause();
+        }
+
         //submits the input delay value to main
         function submit() {
             delay = document.getElementById("delay").value;
         }
+
         //starts the programme
         function start() {
             solarSystem();
@@ -153,6 +160,7 @@
             document.getElementById("switch").onclick = pause;
             document.getElementById("switch").innerHTML = "pause";
         }
+
         //pauses the programme
         function pause() {
             clearTimeout(running);
@@ -160,6 +168,7 @@
             document.getElementById("switch").onclick = start;
             document.getElementById("switch").innerHTML = "start";
         }
+
         //calculate the middle of planet
         function getMid(imgName, x, y) {
             var width = planetR[imgName];
@@ -219,11 +228,11 @@
             uranusLoc = planets(uranus, "uranus", uranusLoc);
             neptuneLoc = planets(neptune, "neptune", neptuneLoc);
             running = setTimeout(solarSystem, delay);
-            if (loaded) {
+            /*if (loaded) {
                 clearTimeout(running);
             }
             //Here we set loaded as false because there is no need to pre-draw background and planets again
-            loaded = false;
+            loaded = false;*/
         }
 
 
