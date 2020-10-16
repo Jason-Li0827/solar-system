@@ -8,32 +8,55 @@
     <!--<script src="https://s2js.com/ojars/FunkcijasSkolai.js"></script>-->
     <style>
         body {
+            margin: 10;
+            display: flex;
+            justify-content: center;
+            background-color: darkblue;
+        }
+        
+        .one {
+            margin-top: 700px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .two {
             margin: auto;
             display: flex;
             justify-content: center;
-            /*background-color: pink;*/
         }
         
-        .sideElements {
+        .three {
             margin: auto;
-            display: grid;
-            justify-content: center;
-        }
-        
-        #changeDelay {
-            margin: auto;
-            display: block;
+            display: flex;
             justify-content: center;
         }
     </style>
 </head>
 
-<body>
-    <canvas id=myCanvas width=1500 height=1500 style="background-color: pink;"> </canvas>
+<body onload="solarSystem()">
+    <!--Html elements-->
+    <canvas id=myCanvas width=1500 height=1500></canvas>
 
-    <p class="sideElements" id="changeDelay">Change the delay!</p>
-    <input type="text" id="delay" class="sideElements" value=100>
-    <button onclick="submit()" class="sideElements">Enter</button>
+    <div>
+        <!--This class includes the switch-->
+        <div class="one">
+            <button onclick="start()" id="switch" style="height:100px;width:100px">start</button>
+        </div>
+
+        <!--This class includes the text for dalay-->
+        <div class="two">
+            <p>Change the delay!</p>
+        </div>
+
+        <!--This class includes the delay input box and the submit button-->
+        <div class="three">
+            <!--Here you can change the default value of delay-->
+            <input type="text" id="delay" value=10>
+            <button onclick="submit()">Enter</button>
+        </div>
+    </div>
+
     <script>
         //changeable variables
         var midX = 750; //centert of solor system
@@ -69,9 +92,15 @@
 
         var neptune = new Image();
         neptune.src = "neptune.png";
-        gaidaAtteluIeladi(done, sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune);
+        //This is the background image
+        var background = new Image();
+        background.src = "sky.png";
+        gaidaAtteluIeladi(done, sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, background);
 
         //setting variables
+        //loaded=true means that the file has just been loaded
+        //so that main function will run only once for drawing background and planets
+        var loaded = true;
         var mercuryLoc = venusLoc = earthLoc = marsLoc = jupiterLoc = saturnLoc = uranusLoc = neptuneLoc = 0; //radians of angles
         //size of planets
         var planetR = {
@@ -113,9 +142,23 @@
         function done() {
             console.log("Images loaded!")
         }
-
+        //submits the input delay value to main
         function submit() {
             delay = document.getElementById("delay").value;
+        }
+        //starts the programme
+        function start() {
+            solarSystem();
+            //This is needed so that there is only one button not two(start and pause)
+            document.getElementById("switch").onclick = pause;
+            document.getElementById("switch").innerHTML = "pause";
+        }
+        //pauses the programme
+        function pause() {
+            clearTimeout(running);
+            //This is needed so that there is only one button not two(start and pause)
+            document.getElementById("switch").onclick = start;
+            document.getElementById("switch").innerHTML = "start";
         }
         //calculate the middle of planet
         function getMid(imgName, x, y) {
@@ -163,6 +206,8 @@
             //clear canvas for redrawing
             const ctx = myCanvas.getContext('2d');
             ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+            //draws the background
+            ctx.drawImage(background, 0, 0);
             //draws the solar system
             drawSun();
             mercuryLoc = planets(mercury, "mercury", mercuryLoc);
@@ -173,10 +218,15 @@
             saturnLoc = planets(saturn, "saturn", saturnLoc);
             uranusLoc = planets(uranus, "uranus", uranusLoc);
             neptuneLoc = planets(neptune, "neptune", neptuneLoc);
-            setTimeout(solarSystem, delay);
+            running = setTimeout(solarSystem, delay);
+            if (loaded) {
+                clearTimeout(running);
+            }
+            //Here we set loaded as false because there is no need to pre-draw background and planets again
+            loaded = false;
         }
 
-        solarSystem();
+
 
 
 
