@@ -7,6 +7,7 @@
     <title>Document</title>
     <style>
         body {
+            /*centers the whole script code into the middle of window*/
             margin: 10;
             display: flex;
             justify-content: center;
@@ -14,18 +15,24 @@
         }
         
         .one {
+            /*This class includes the switch*/
+            /*This makes centers it*/
             margin-top: 700px;
             display: flex;
             justify-content: center;
         }
         
         .two {
+            /*This class includes the text for dalay*/
+            /*This makes the text centered*/
             margin: auto;
             display: flex;
             justify-content: center;
         }
         
         .three {
+            /*This class includes the delay input box and the submit button*/
+            /*This makes the text centered*/
             margin: auto;
             display: flex;
             justify-content: center;
@@ -38,17 +45,17 @@
     <canvas id=myCanvas width=1500 height=1500></canvas>
 
     <div>
-        <!--This class includes the switch-->
+        <!--This div includes the switch-->
         <div class="one">
             <button onclick="start()" id="switch" style="height:100px;width:100px">start</button>
         </div>
 
-        <!--This class includes the text for dalay-->
+        <!--This div includes the text for dalay-->
         <div class="two">
             <p>Change the delay!</p>
         </div>
 
-        <!--This class includes the delay input box and the submit button-->
+        <!--This div includes the delay input box and the submit button-->
         <div class="three">
             <!--Here you can change the default value of delay-->
             <input type="text" id="delay" value=10>
@@ -57,10 +64,9 @@
     </div>
 
     <script>
-        //changeable variables
-        var midX = 750; //centert of solor system
+        //center of solor system
+        var midX = 750;
         var midY = 750;
-        var delay = document.getElementById("delay").value; //the delay of setTimeOut
         //get canvas
         var ctx = myCanvas.getContext("2d");
 
@@ -94,12 +100,10 @@
         //This is the background image
         var background = new Image();
         background.src = "sky.png";
+        //Downloads the images and wait until it's done
         gaidaAtteluIeladi(done, sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, background);
 
         //setting variables
-        //loaded=true means that the file has just been loaded
-        //so that main function will run only once for drawing background and planets
-        var loaded = true;
         var mercuryLoc = venusLoc = earthLoc = marsLoc = jupiterLoc = saturnLoc = uranusLoc = neptuneLoc = 0; //radians of angles
         //size of planets
         var planetR = {
@@ -143,8 +147,9 @@
         }
 
         //runs the main function once so that it draws the background image and the planets
+        //then use the pause function to stop it
         function setUp() {
-            solarSystem();
+            start();
             pause();
         }
 
@@ -172,7 +177,6 @@
         //calculate the middle of planet
         function getMid(imgName, x, y) {
             var width = planetR[imgName];
-            //console.log(width);
             var midP = {
                 "x": x - 1 / 2 * width,
                 "y": y - 1 / 2 * width
@@ -193,19 +197,22 @@
             //get the speed of revolutionary period
             var s = planetS[planetName];
             //The planet's orbit
+            //Calculates the x and y coordinates as if the center is (0;0)
+            //Then add the real midpoint's x and y value(x;y) to the result
             pointAngleInRadians = i;
             var x = Math.cos(pointAngleInRadians) * r + midX;
             var y = Math.sin(pointAngleInRadians) * r + midY;
             //get the midponi coordinate andn draw the planet
             var middle = getMid(planetName, x, y);
+            //Draws the planet
             ctx.drawImage(planetImg, middle["x"], middle["y"]);
-
+            //Add 1/8 radians to the planet's angle
             i += s * 1 / 8 * Math.PI;
-
+            //As 2Pi radians = 0 radians
             if (i >= 2 * Math.PI) {
                 i -= 2 * Math.PI;
-                //console.log(i);
             }
+            //Returns the radians of planet
             return i;
 
         }
@@ -228,11 +235,6 @@
             uranusLoc = planets(uranus, "uranus", uranusLoc);
             neptuneLoc = planets(neptune, "neptune", neptuneLoc);
             running = setTimeout(solarSystem, delay);
-            /*if (loaded) {
-                clearTimeout(running);
-            }
-            //Here we set loaded as false because there is no need to pre-draw background and planets again
-            loaded = false;*/
         }
 
 
