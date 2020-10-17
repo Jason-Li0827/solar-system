@@ -160,6 +160,8 @@
 
         //starts the programme
         function start() {
+            //gets the latest delay value to main
+            delay = document.getElementById("delay").value;
             solarSystem();
             //This is needed so that there is only one button not two(start and pause)
             document.getElementById("switch").onclick = pause;
