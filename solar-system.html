@@ -13,6 +13,17 @@
             justify-content: center;
             background-color: darkblue;
         }
+        /*.slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 25px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+        */
         
         .one {
             /*This class includes the switch*/
@@ -58,15 +69,23 @@
         <!--This div includes the delay input box and the submit button-->
         <div class="three">
             <!--Here you can change the default value of delay-->
-            <input type="text" id="delay" value=10>
+            <input type="range" min=minDelay max=maxDelay value=150 id="delay" class="slider" onmousedown="delayCheckStart()" onmouseup="delayCheckEnd()">
+            <!--<input type="text" id="delay" value=10>-->
             <button onclick="submit()">Enter</button>
         </div>
     </div>
 
     <script>
+        //changeable elements
+        var canvasWidth = 1500; //don't forget to change the width and height value in <canvas>
+        var canvasHeight = 1500;
+        var minDelay = 1;
+        var maxDelay = 100;
+
         //center of solor system
-        var midX = 750;
-        var midY = 750;
+        var midX = 1 / 2 * canvasWidth;
+        var midY = 1 / 2 * canvasHeight;
+
         //get canvas
         var ctx = myCanvas.getContext("2d");
 
@@ -153,6 +172,18 @@
             pause();
         }
 
+        //Checks the change of delay while mouse is on slider
+        function delayCheckStart() {
+            delay = document.getElementById("delay").value;
+            delayCheck = setTimeout(delayCheckStart, 10);
+        }
+
+        //Stops checking the change of delay
+        //as the mouse left
+        function delayCheckEnd() {
+            delay = document.getElementById("delay").value;
+            clearTimeout(delayCheck);
+        }
         //submits the input delay value to main
         function submit() {
             delay = document.getElementById("delay").value;
