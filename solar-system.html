@@ -8,45 +8,36 @@
     <style>
         body {
             /*centers the whole script code into the middle of window*/
-            margin: 10;
+            margin: 10px;
             display: flex;
             justify-content: center;
             background-color: darkblue;
         }
-        /*.slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 25px;
-            background: #d3d3d3;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
+        
+        .planetNames {
+            display: none;
         }
-        */
         
         .one {
             /*This class includes the switch*/
             /*This makes centers it*/
+            width: 100px;
+            height: 100px;
             margin-top: 700px;
             display: flex;
             justify-content: center;
+            position: relative;
+            left: 40%;
         }
         
         .two {
-            /*This class includes the text for dalay*/
-            /*This makes the text centered*/
-            margin: auto;
-            display: flex;
-            justify-content: center;
-        }
-        
-        .three {
             /*This class includes the delay input box and the submit button*/
             /*This makes the text centered*/
             margin: auto;
             display: flex;
             justify-content: center;
+            position: relative;
+            left: 10%;
         }
     </style>
 </head>
@@ -61,17 +52,12 @@
             <button onclick="start()" id="switch" style="height:100px;width:100px">start</button>
         </div>
 
-        <!--This div includes the text for dalay-->
+        <!--This div includes the delay slider and text-->
         <div class="two">
-            <p>Change the delay!</p>
-        </div>
-
-        <!--This div includes the delay input box and the submit button-->
-        <div class="three">
             <!--Here you can change the default value of delay-->
-            <input type="range" min=minDelay max=maxDelay value=150 id="delay" class="slider" onmousedown="delayCheckStart()" onmouseup="delayCheckEnd()">
-            <!--<input type="text" id="delay" value=10>-->
-            <button onclick="submit()">Enter</button>
+            <!--When value == 101, the delay will be changed to 500-->
+            <p style="font-size:30px; color:#f9ed69;">Delay:</p>
+            <input type="range" min=1 max=101 value=50 id="delay" class="slider" onmousedown="delayCheckStart()" onmouseup="delayCheckEnd()">
         </div>
     </div>
 
@@ -79,8 +65,6 @@
         //changeable elements
         var canvasWidth = 1500; //don't forget to change the width and height value in <canvas>
         var canvasHeight = 1500;
-        var minDelay = 1;
-        var maxDelay = 100;
 
         //center of solor system
         var midX = 1 / 2 * canvasWidth;
@@ -175,6 +159,9 @@
         //Checks the change of delay while mouse is on slider
         function delayCheckStart() {
             delay = document.getElementById("delay").value;
+            if (delay == 101)(
+                delay = 500
+            );
             delayCheck = setTimeout(delayCheckStart, 10);
         }
 
@@ -182,17 +169,14 @@
         //as the mouse left
         function delayCheckEnd() {
             delay = document.getElementById("delay").value;
+            if (delay == 101)(
+                delay = 500
+            );
             clearTimeout(delayCheck);
-        }
-        //submits the input delay value to main
-        function submit() {
-            delay = document.getElementById("delay").value;
         }
 
         //starts the programme
         function start() {
-            //gets the latest delay value to main
-            delay = document.getElementById("delay").value;
             solarSystem();
             //This is needed so that there is only one button not two(start and pause)
             document.getElementById("switch").onclick = pause;
@@ -245,6 +229,8 @@
             if (i >= 2 * Math.PI) {
                 i -= 2 * Math.PI;
             }
+
+
             //Returns the radians of planet
             return i;
 
@@ -267,6 +253,7 @@
             saturnLoc = planets(saturn, "saturn", saturnLoc);
             uranusLoc = planets(uranus, "uranus", uranusLoc);
             neptuneLoc = planets(neptune, "neptune", neptuneLoc);
+            console.log(delay);
             running = setTimeout(solarSystem, delay);
         }
 
