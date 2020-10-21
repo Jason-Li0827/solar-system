@@ -62,15 +62,6 @@
     </div>
 
     <script>
-        //earth:365.256363004 days
-        /*mercury:0.240846
-                venus:0.615198
-                mars:1.88082
-                jupitar:11.862
-                saturn:29.4571
-                uranus:84.0205 
-                neptune:164.79 */
-
         //changeable elements
         var canvasWidth = 1500; //don't forget to change the width and height value in <canvas>
         var canvasHeight = 1500;
@@ -142,19 +133,26 @@
             "neptune": 700
         };
         //the speed of each planet
+        //How I got those numbers:
+        //1) s(the long numbers) = (2 * PI * r(distance to sun)) / time(for completing a revolution period, in days)
+        //2) this number is the distance on its orbit it has to go by one turn
+        //3) so to get the radians in for it, you have to divide this number by the planet's distance to sun(r)
+        //4) because s / (2 * PI * r) = Δα / 2 * PI
+        //5) Then you can get the final result
+        //6*) This whole thing can be simplified as --> s = 2 * PI / time(for completing a revolution period, in days)
         var planetS = {
-            "mercury": 0.329718, //1           2D / ((430PI / 4.1) * (Revol.Per. / 365.26)) Ps. Revol.Per. in days
-            "venus": 0.221288, //1 / 2.5
-            "earth": 0.243902, //1 / 4.1
-            "mars": 0.181026, //1 / 7.8
-            "jupiter": 0.038261, //1 / 49
-            "saturn": 0.019254, //1 / 119
-            "uranus": 0.008102, //1 / 347
-            "neptune": 2 * planetD["neptune"] / ((2 * planetD["earth"] * 4.1) * (60191.1954 / 365.26)),
+            "mercury": 4.9996624038029086477133741318865 / planetD["mercury"], // 2D / ((430PI / 4.1) * (Revol.Per. / 365.26)) Ps. Revol.Per. in days
+            "venus": 3.3554317461731911709740147943125 / planetD["venus"],
+            "earth": 3.6984566947265399610848955832313 / planetD["earth"],
+            "mars": 2.7438230391295483645442838142824 / planetD["mars"],
+            "jupiter": 0.58007500123145474681078849925011 / planetD["jupiter"],
+            "saturn": 0.29198604345843261075723565702771 / planetD["saturn"],
+            "uranus": 0.12284233605978629394022125275566 / planetD["uranus"],
+            "neptune": 0.0730717089208274371119106320874 / planetD["neptune"],
             //"neptune": 0.004819 //1 / 679.55
         };
 
-        console.log(2 * planetD["neptune"] / ((2 * planetD["earth"] * 4.1) * (60191.1954 / 365.26)));
+        //console.log(2 * planetD["neptune"] / ((2 * planetD["earth"] * 4.1) * (60191.1954 / 365.26)));
         //basically does nothing
         //but gives a console log when all images all loaded
         function done() {
@@ -236,7 +234,7 @@
             //Draws the planet
             ctx.drawImage(planetImg, middle["x"], middle["y"]);
             //Add 1/8 radians to the planet's angle
-            i += s * 1 / 32 * Math.PI;
+            i += s * 100;
             //As 2Pi radians = 0 radians
             /*if (i >= 2 * Math.PI) {
                 i -= 2 * Math.PI;
@@ -305,9 +303,9 @@
                 l.innerHTML = "Attēlu ielāde " + ".".repeat(lcount / 10);
             }, 10);
         }
+        //https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.amazon.com%2FAMAZING-WALL-Adhesive-Wallpaper-15-7x198inch%2Fdp%2FB07S9WW93Z&psig=AOvVaw0c3DvkOPVNE8ZQV2OsOAPz&ust=1603378569212000&source=images&cd=vfe&ved=0CA0QjhxqFwoTCIDkyeT4xewCFQAAAAAdAAAAABAE
     </script>
 
 </body>
 
 </html>
-https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.amazon.com%2FAMAZING-WALL-Adhesive-Wallpaper-15-7x198inch%2Fdp%2FB07S9WW93Z&psig=AOvVaw0c3DvkOPVNE8ZQV2OsOAPz&ust=1603378569212000&source=images&cd=vfe&ved=0CA0QjhxqFwoTCIDkyeT4xewCFQAAAAAdAAAAABAE
