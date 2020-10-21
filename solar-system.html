@@ -23,7 +23,7 @@
             /*This makes centers it*/
             width: 100px;
             height: 100px;
-            margin-top: 700px;
+            margin-top: 50px;
             display: flex;
             justify-content: center;
             position: relative;
@@ -65,6 +65,7 @@
         //changeable elements
         var canvasWidth = 1500; //don't forget to change the width and height value in <canvas>
         var canvasHeight = 1500;
+        var a = 0;
 
         //center of solor system
         var midX = 1 / 2 * canvasWidth;
@@ -133,16 +134,18 @@
         };
         //the speed of each planet
         var planetS = {
-            "mercury": 1,
-            "venus": 1 / 2.5,
-            "earth": 1 / 4.1,
-            "mars": 1 / 7.8,
-            "jupiter": 1 / 49,
-            "saturn": 1 / 119,
-            "uranus": 1 / 347,
-            "neptune": 1 / 679.55
+            "mercury": 0.329718, //1           2D / ((430PI / 4.1) * (Revol.Per. / 365.26)) Ps. Revol.Per. in days
+            "venus": 0.221288, //1 / 2.5
+            "earth": 0.243902, //1 / 4.1
+            "mars": 0.181026, //1 / 7.8
+            "jupiter": 0.038261, //1 / 49
+            "saturn": 0.019254, //1 / 119
+            "uranus": 0.008102, //1 / 347
+            "neptune": 2 * planetD["neptune"] / ((2 * planetD["earth"] * 4.1) * (60191.1954 / 365.26)),
+            //"neptune": 0.004819 //1 / 679.55
         };
 
+        console.log(2 * planetD["neptune"] / ((2 * planetD["earth"] * 4.1) * (60191.1954 / 365.26)));
         //basically does nothing
         //but gives a console log when all images all loaded
         function done() {
@@ -224,13 +227,17 @@
             //Draws the planet
             ctx.drawImage(planetImg, middle["x"], middle["y"]);
             //Add 1/8 radians to the planet's angle
-            i += s * 1 / 8 * Math.PI;
+            i += s * 1 / 32 * Math.PI;
             //As 2Pi radians = 0 radians
-            if (i >= 2 * Math.PI) {
+            /*if (i >= 2 * Math.PI) {
                 i -= 2 * Math.PI;
-            }
+            }*/
 
-
+            if (planetName == "neptune") {
+                if (i >= 2 * Math.PI) {
+                    console.log(earthLoc)
+                };
+            };
             //Returns the radians of planet
             return i;
 
@@ -253,7 +260,6 @@
             saturnLoc = planets(saturn, "saturn", saturnLoc);
             uranusLoc = planets(uranus, "uranus", uranusLoc);
             neptuneLoc = planets(neptune, "neptune", neptuneLoc);
-            console.log(delay);
             running = setTimeout(solarSystem, delay);
         }
 
