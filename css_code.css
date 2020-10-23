@@ -1,0 +1,33 @@
+body {
+    /*centers the whole script code into the middle of window*/
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    background-color: darkblue;
+}
+
+.planetNames {
+    display: none;
+}
+
+.one {
+    /*This class includes the switch*/
+    /*This makes centers it*/
+    width: 100px;
+    height: 100px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 40%;
+}
+
+.two {
+    /*This class includes the delay input box and the submit button*/
+    /*This makes the text centered*/
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 10%;
+}
