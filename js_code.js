@@ -207,7 +207,6 @@ function solarSystem() {
     uranusLoc = planets(uranus, "uranus", uranusLoc);
     neptuneLoc = planets(neptune, "neptune", neptuneLoc);
     running = setTimeout(solarSystem, delay);
-    console.log(document.getElementById("delay").value);
 }
 
 
