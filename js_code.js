@@ -238,7 +238,7 @@ function solarSystem() {
 
 
 
-// Skolotāja funkcija attēlu gaidīšanai
+// Skolotāja funkcija attēlu gaidīšanai:
 // Funkcijai gaida, kad norādītie attēli ir ielādējušies no tīkla un tad izsauc pirmajā parametrā norādīto funkciju.
 // Gaidīšanas laikā lapas apakšā (pēc visiem elementiem) uzrādās "Attēlu ielāde ...", kas pazūd brīdī, kad visi attēli ir ielādēti.
 // Autors:: 2018-2019 Ojārs Krūmiņš
