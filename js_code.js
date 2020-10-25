@@ -196,7 +196,7 @@ function planetMovement(planetImg, planetName, i) {
     //Draws the planet
     ctx.drawImage(planetImg, middle["x"], middle["y"]);
     //Add 1/8 radians to the planet's angle
-    i += s * 10;
+    i += s * speed / 10;
     //As 2Pi radians = 0 radians
     if (i >= 2 * Math.PI) {
         i -= 2 * Math.PI;

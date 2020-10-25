@@ -10,24 +10,29 @@ body {
     display: none;
 }
 
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
 .one {
-    /*This class includes the switch*/
-    /*This makes centers it*/
-    width: 100px;
-    height: 100px;
-    margin-top: 50px;
+    /*This class includes the switch
+    This makes centers it*/
+    margin-bottom: 0px;
     display: flex;
     justify-content: center;
     position: relative;
-    left: 40%;
+    /*left: 40%;*/
 }
 
 .two {
-    /*This class includes the delay input box and the submit button*/
+    /*This class includes the delay slider and the text*/
     /*This makes the text centered*/
-    margin: auto;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
     position: relative;
-    left: 10%;
+    /*left: 10%;*/
 }
