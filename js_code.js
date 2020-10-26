@@ -3,11 +3,14 @@ let canvasWidth = 1500; //don't forget to change the width and height value in <
 let canvasHeight = 1500;
 let minSpeed = 1;
 let maxSpeed = 100;
+let defaultFluency = 10; //The default fluency
+let highFluency = 30; //The high fluency, to which can be changed in function fluencyCheck()
+let highestFluency = 100; //The highest fluency!
 
 //center of solor system
 let midX = 1 / 2 * canvasWidth;
 let midY = 1 / 2 * canvasHeight;
-
+let fluency = defaultFluency;
 //get canvas
 let ctx = myCanvas.getContext("2d");
 
@@ -124,6 +127,78 @@ function setUp() {
     pause();
 }
 
+//calculate the middle of planet
+function getMid(imgName, x, y) {
+    let width = planetSize[imgName];
+    let midP = {
+        "x": x - 1 / 2 * width,
+        "y": y - 1 / 2 * width
+    };
+    return midP;
+}
+
+//draws the sun
+function drawSun() {
+    let middle = getMid("sun", midX, midY);
+    ctx.drawImage(sun, middle["x"], middle["y"]);
+}
+
+//draws the planetSpeed
+function planetMovement(planetImg, planetName, i) {
+    //get the distance between planet and sun(midpoint)
+    let r = planetDistance[planetName];
+    //get the speed of revolutionary period
+    let s = planetSpeed[planetName];
+    //The planet's orbit
+    //Calculates the x and y coordinates as if the center is (0;0)
+    //Then add the real midpoint's x and y value(x;y) to the result
+    pointAngleInRadians = i;
+    let x = Math.cos(pointAngleInRadians) * r + midX;
+    let y = Math.sin(pointAngleInRadians) * r + midY;
+    //get the midponi coordinate andn draw the planet
+    let middle = getMid(planetName, x, y);
+    //Draws the planet
+    ctx.drawImage(planetImg, middle["x"], middle["y"]);
+    //Add the Δα and the optimization stuff to the angle
+    i += s * speed / fluency;
+    //As 2Pi radians = 0 radians
+    if (i >= 2 * Math.PI) {
+        i -= 2 * Math.PI;
+    };
+    //This thing here check if the ratio is still right, using earth and neptune as samples
+    //The first result should be 1035..... something like that
+    //Don't forget to turn off the IF check above
+    /*if (planetName == "neptune") {
+        if (i >= 2 * Math.PI) {
+            console.log(earthLoc)
+        };
+    };*/
+    //Returns the radians of planet
+    return i;
+
+}
+
+//combines everything together
+function solarSystem() {
+    //clear canvas for redrawing
+    const ctx = myCanvas.getContext('2d');
+    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+    //draws the background
+    ctx.drawImage(background, 0, 0);
+    //draws the solar system
+    drawSun();
+    mercuryLoc = planetMovement(mercury, "mercury", mercuryLoc);
+    venusLoc = planetMovement(venus, "venus", venusLoc);
+    earthLoc = planetMovement(earth, "earth", earthLoc);
+    marsLoc = planetMovement(mars, "mars", marsLoc);
+    jupiterLoc = planetMovement(jupiter, "jupiter", jupiterLoc);
+    saturnLoc = planetMovement(saturn, "saturn", saturnLoc);
+    uranusLoc = planetMovement(uranus, "uranus", uranusLoc);
+    neptuneLoc = planetMovement(neptune, "neptune", neptuneLoc);
+    running = setTimeout(solarSystem, delay);
+}
+
+//--------------------Here starts the functions for HTML stuffs----------\\
 //Checks the change of delay while mouse is on slider
 function delayCheckStart() {
     speed = document.getElementById("speed").value;
@@ -163,76 +238,31 @@ function pause() {
     document.getElementById("switch").innerHTML = "start";
 }
 
-//calculate the middle of planet
-function getMid(imgName, x, y) {
-    let width = planetSize[imgName];
-    let midP = {
-        "x": x - 1 / 2 * width,
-        "y": y - 1 / 2 * width
-    };
-    return midP;
+//Checks if the fluency setting is on and changes a parameter in function planetMovement()
+//Where i += s * speed / THE PARAMETER;
+function fluencyCheck() {
+    let check = document.getElementById("fluency");
+    if (check.checked == true) {
+        fluency = highFluency;
+    } else {
+        fluency = defaultFluency;
+    }
+    console.log(fluency)
 }
 
-//draws the sun
-function drawSun() {
-    let middle = getMid("sun", midX, midY);
-    ctx.drawImage(sun, middle["x"], middle["y"]);
+function highestFluencyCheck() {
+    let check = document.getElementById("highestFluency");
+    if (check.checked == true) {
+        fluency = highestFluency;
+    } else {
+        fluency = defaultFluency;
+    }
+    console.log(fluency)
 }
 
-//draws the planetSpeed
-function planetMovement(planetImg, planetName, i) {
-    //get the distance between planet and sun(midpoint)
-    let r = planetDistance[planetName];
-    //get the speed of revolutionary period
-    let s = planetSpeed[planetName];
-    //The planet's orbit
-    //Calculates the x and y coordinates as if the center is (0;0)
-    //Then add the real midpoint's x and y value(x;y) to the result
-    pointAngleInRadians = i;
-    let x = Math.cos(pointAngleInRadians) * r + midX;
-    let y = Math.sin(pointAngleInRadians) * r + midY;
-    //get the midponi coordinate andn draw the planet
-    let middle = getMid(planetName, x, y);
-    //Draws the planet
-    ctx.drawImage(planetImg, middle["x"], middle["y"]);
-    //Add the Δα and the optimization stuff to the angle
-    i += s * speed / 10;
-    //As 2Pi radians = 0 radians
-    if (i >= 2 * Math.PI) {
-        i -= 2 * Math.PI;
-    };
-    //This thing here check if the ratio is still right, using earth and neptune as samples
-    //The first result should be 1035..... something like that
-    //Don't forget to turn off the IF check above
-    /*if (planetName == "neptune") {
-        if (i >= 2 * Math.PI) {
-            console.log(earthLoc)
-        };
-    };*/
-    //Returns the radians of planet
-    return i;
 
-}
 
-//combines everything together
-function solarSystem() {
-    //clear canvas for redrawing
-    const ctx = myCanvas.getContext('2d');
-    ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-    //draws the background
-    ctx.drawImage(background, 0, 0);
-    //draws the solar system
-    drawSun();
-    mercuryLoc = planetMovement(mercury, "mercury", mercuryLoc);
-    venusLoc = planetMovement(venus, "venus", venusLoc);
-    earthLoc = planetMovement(earth, "earth", earthLoc);
-    marsLoc = planetMovement(mars, "mars", marsLoc);
-    jupiterLoc = planetMovement(jupiter, "jupiter", jupiterLoc);
-    saturnLoc = planetMovement(saturn, "saturn", saturnLoc);
-    uranusLoc = planetMovement(uranus, "uranus", uranusLoc);
-    neptuneLoc = planetMovement(neptune, "neptune", neptuneLoc);
-    running = setTimeout(solarSystem, delay);
-}
+
 
 
 

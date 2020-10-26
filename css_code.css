@@ -55,6 +55,12 @@ body {
     align-items: center;
 }
 
+.highestFluency {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .one {
     /*This class includes the switch
     This makes centers it*/
