@@ -17,6 +17,20 @@ body {
     margin: auto;
 }
 
+.Planets {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: auto;
+}
+
+.planet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+}
+
 .one {
     /*This class includes the switch
     This makes centers it*/
