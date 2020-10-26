@@ -22,17 +22,143 @@
         <div class="two">
             <!--Here you can change the default value of delay-->
             <!--When value == 101, the delay will be changed to 500-->
-            <p style="font-size:30px; color:#f9ed69;">Speed:</p>
+            <p style="font-size:30px; color:#f9ed69; margin-right: 20px;">Speed:</p>
             <input type="range" min=1 max=100 value=50 id="speed" onmousedown="delayCheckStart()" onmouseup="delayCheckEnd()">
         </div>
 
+        <!--This class contains all the planets-->
         <div class="Planets">
+            <!--The Mercury-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
             <div class="planet">
-                <img src="mercury.png" alt="mercury" width="36" height="36">
-                <p style="font-size:15px; color:#f9ed69;">Mercury</p>
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="mercury.png" alt="Mercury" width="36" height="36">
+                    <p class="planetNames">Mercury</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
             </div>
-            <input type="range" min=1 max=100 value=50 id="lol">
+
+            <!--The Venus-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
+            <div class="planet">
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="venus.png" alt="Venus" width="36" height="36">
+                    <p class="planetNames">Venus</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
+            </div>
+
+            <!--The Earth, our home-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
+            <div class="planet">
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="earth.png" alt="Earth" width="36" height="36">
+                    <p class="planetNames">Earth</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
+            </div>
+
+            <!--The Mars, our goal-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
+            <div class="planet">
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="mars.png" alt="Mars" width="36" height="36">
+                    <p class="planetNames">Mars</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
+            </div>
+
+            <!--The Jupiter-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
+            <div class="planet">
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="jupiter.png" alt="Jupiter" width="36" height="36">
+                    <p class="planetNames">Jupiter</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
+            </div>
+
+            <!--The Saturn-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
+            <div class="planet">
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="saturn.png" alt="Saturn" width="36" height="36">
+                    <p class="planetNames">Saturn</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
+            </div>
+
+            <!--The Uranus-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
+            <div class="planet">
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="uranus.png" alt="Uranus" width="36" height="36">
+                    <p class="planetNames">Uranus</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
+            </div>
+
+            <!--The Neptune-->
+            <!--Each this small div with class "planet" contains stuffs for a planet-->
+            <div class="planet">
+                <!--This is the first div in planet div, it contains the planet's image and the name of planet-->
+                <div class="ImgAndText">
+                    <img src="neptune.png" alt="Neptune" width="36" height="36">
+                    <p class="planetNames">Neptune</p>
+                </div>
+                <!--This is the second div in the planet div, it contains the slider-->
+                <div class="sliders">
+                    <input type="range" min=1 max=100 value=50>
+                </div>
+            </div>
         </div>
+
+        <!--Down here are the advanced settings-->
+        <div class="Advanced">
+            <p style="font-size:30px; color:#f08a5d; margin-bottom: 10px;"><b>Advanced stuffs</b></p>
+            <!--This div contains the advanced fluency setting and the text-->
+            <div class="fluency">
+                <div>
+                    <p style="font-size:20px; color:#f08a5d; margin-right: 15px;">High fluency:</p>
+                </div>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
 

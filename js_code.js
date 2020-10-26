@@ -195,7 +195,7 @@ function planetMovement(planetImg, planetName, i) {
     let middle = getMid(planetName, x, y);
     //Draws the planet
     ctx.drawImage(planetImg, middle["x"], middle["y"]);
-    //Add 1/8 radians to the planet's angle
+    //Add the Δα and the optimization stuff to the angle
     i += s * speed / 10;
     //As 2Pi radians = 0 radians
     if (i >= 2 * Math.PI) {
