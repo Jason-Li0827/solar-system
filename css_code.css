@@ -73,6 +73,21 @@ body {
     align-items: center;
 }
 
+.zero {
+    margin-bottom: 0px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+#reset {
+    color: #6a2c70;
+    background-color: #f08a5d;
+    font-size: 22px;
+    border-color: #b83b5e;
+    outline: #b83b5e;
+}
+
 .one {
     /*This class includes the switch
     This makes centers it*/
@@ -80,17 +95,24 @@ body {
     display: flex;
     justify-content: center;
     position: relative;
-    /*left: 40%;*/
+}
+
+#switch {
+    color: #6a2c70;
+    background-color: #f08a5d;
+    font-size: 22px;
+    margin-bottom: 5px;
+    border-color: #b83b5e;
+    outline: #b83b5e;
 }
 
 .two {
-    /*This class includes the delay slider and the text*/
-    /*This makes the text centered*/
-    margin-top: 10px;
+    /*This class includes the delay slider and the text
+    This makes the text centered*/
+    margin-top: 5px;
     display: flex;
     justify-content: center;
     position: relative;
-    /*left: 10%;*/
 }
 
 

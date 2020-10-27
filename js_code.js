@@ -7,6 +7,7 @@ let defaultFluency = 10; //The default fluency
 let highFluency = 30; //The high fluency, to which can be changed in function fluencyCheck()
 let highestFluency = 100; //The highest fluency!
 let orbitDraw = true; //The default orbit lines
+let defaultLoc = 0; //The default radians position
 
 //Lines of code that has to be ran before whole programme starts
 //all in function setUp() down below somewhere
@@ -52,7 +53,7 @@ background.src = "sky.png";
 gaidaAtteluIeladi(done, sun, mercury, venus, earth, mars, jupiter, saturn, uranus, neptune, background);
 
 //setting variables
-let mercuryLoc = venusLoc = earthLoc = marsLoc = jupiterLoc = saturnLoc = uranusLoc = neptuneLoc = 0; //radians of angles
+let mercuryLoc = venusLoc = earthLoc = marsLoc = jupiterLoc = saturnLoc = uranusLoc = neptuneLoc = defaultLoc; //radians of angles
 
 //size of planetSpeed
 let planetSize = {
@@ -264,7 +265,7 @@ function start(move) {
     solarSystem(move);
     //This is needed so that there is only one button not two(start and pause)
     document.getElementById("switch").onclick = pause;
-    document.getElementById("switch").innerHTML = "pause";
+    document.getElementById("switch").innerHTML = "Pause";
 }
 
 //pauses the programme
@@ -273,7 +274,7 @@ function pause() {
     delete running;
     //This is needed so that there is only one button not two(start and pause)
     document.getElementById("switch").onclick = start;
-    document.getElementById("switch").innerHTML = "start";
+    document.getElementById("switch").innerHTML = "Start";
 }
 
 //Checks if the fluency setting is on and changes a parameter in function planetMovement()
@@ -323,7 +324,16 @@ function orbitLines() {
     } else {}
 }
 
-
+//Resets the radians of each planet to 0 and pauses the programme
+function reset() {
+    if (typeof running !== 'undefined') {
+        clearTimeout(running);
+        delete running;
+    } else {}
+    mercuryLoc = venusLoc = earthLoc = marsLoc = jupiterLoc = saturnLoc = uranusLoc = neptuneLoc = defaultLoc;
+    start(false);
+    pause();
+}
 
 
 
