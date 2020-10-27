@@ -12,6 +12,12 @@ body {
     color: #f9ed69;
 }
 
+.advancedText {
+    font-size: 20px;
+    color: #f08a5d;
+    margin-right: 15px;
+}
+
 .main {
     display: flex;
     flex-direction: column;
@@ -61,6 +67,12 @@ body {
     align-items: center;
 }
 
+.orbit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .one {
     /*This class includes the switch
     This makes centers it*/
@@ -82,7 +94,7 @@ body {
 }
 
 
-/*----------------------------------FBI warning! The following content contains ctrl+c & ctrl+v*/
+/*----------------------------------FBI warning! The following content contains ctrl+c & ctrl+v----------------------------------*/
 
 
 /*The switch*/

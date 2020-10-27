@@ -6,6 +6,10 @@ let maxSpeed = 100;
 let defaultFluency = 10; //The default fluency
 let highFluency = 30; //The high fluency, to which can be changed in function fluencyCheck()
 let highestFluency = 100; //The highest fluency!
+let orbitDraw = true; //The default orbit lines
+
+//Lines of code that has to be ran before whole programme starts
+//all in function setUp() down below somewhere
 
 //center of solor system
 let midX = 1 / 2 * canvasWidth;
@@ -113,6 +117,7 @@ function done() {
     console.log("Images loaded!")
 }
 
+//Lines of code that has to be run before whole programme starts
 //runs the main function once so that it draws the background image and the planetSpeed
 //then use the pause function to stop it
 function setUp() {
@@ -123,7 +128,16 @@ function setUp() {
     //To change from speed to delay, you need this line of code
     //This line is also used in some other place(delayCheckStart, delayCheckEnd, etc.).
     delay = minSpeed + maxSpeed - speed;
-    start();
+    //Checks the default value of orbitDraw
+    //If true, then turns the switch to checked(true)
+    let check = document.getElementById("orbitSwitch");
+    if (orbitDraw) {
+        check.checked = true;
+    } else {
+        check.checked = false;
+    }
+    //This has to be run so that it draws all the images 
+    start(false);
     pause();
 }
 
@@ -144,12 +158,30 @@ function drawSun() {
 }
 
 //draws the planetSpeed
-function planetMovement(planetImg, planetName, i) {
+function planetMovement(planetImg, planetName, i, orbit = orbitDraw, move) {
     //get the distance between planet and sun(midpoint)
     let r = planetDistance[planetName];
     //get the speed of revolutionary period
     let s = planetSpeed[planetName];
-    //The planet's orbit
+    //Draws planet's orbit
+    if (orbit) {
+        ctx.beginPath();
+        ctx.arc(midX, midY, r, 0, Math.PI * 2);
+        ctx.strokeStyle = "#6a2c70";
+        ctx.stroke();
+        ctx.closePath();
+    }
+    //Add the Δα and the optimization stuff to the angle
+    //In some cases people don't want things to move, so this check is needed
+    if (move == true) {
+        i += s * speed / fluency;
+    } else {};
+    //As 2Pi radians = 0 radians
+    if (i >= 2 * Math.PI) {
+        i -= 2 * Math.PI;
+    };
+
+    //The planet's position
     //Calculates the x and y coordinates as if the center is (0;0)
     //Then add the real midpoint's x and y value(x;y) to the result
     pointAngleInRadians = i;
@@ -159,12 +191,7 @@ function planetMovement(planetImg, planetName, i) {
     let middle = getMid(planetName, x, y);
     //Draws the planet
     ctx.drawImage(planetImg, middle["x"], middle["y"]);
-    //Add the Δα and the optimization stuff to the angle
-    i += s * speed / fluency;
-    //As 2Pi radians = 0 radians
-    if (i >= 2 * Math.PI) {
-        i -= 2 * Math.PI;
-    };
+
     //This thing here check if the ratio is still right, using earth and neptune as samples
     //The first result should be 1035..... something like that
     //Don't forget to turn off the IF check above
@@ -173,13 +200,16 @@ function planetMovement(planetImg, planetName, i) {
             console.log(earthLoc)
         };
     };*/
+
     //Returns the radians of planet
     return i;
 
 }
 
 //combines everything together
-function solarSystem() {
+//In some cases people don't want things to move, so this check is needed
+function solarSystem(move = true) {
+
     //clear canvas for redrawing
     const ctx = myCanvas.getContext('2d');
     ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
@@ -187,18 +217,24 @@ function solarSystem() {
     ctx.drawImage(background, 0, 0);
     //draws the solar system
     drawSun();
-    mercuryLoc = planetMovement(mercury, "mercury", mercuryLoc);
-    venusLoc = planetMovement(venus, "venus", venusLoc);
-    earthLoc = planetMovement(earth, "earth", earthLoc);
-    marsLoc = planetMovement(mars, "mars", marsLoc);
-    jupiterLoc = planetMovement(jupiter, "jupiter", jupiterLoc);
-    saturnLoc = planetMovement(saturn, "saturn", saturnLoc);
-    uranusLoc = planetMovement(uranus, "uranus", uranusLoc);
-    neptuneLoc = planetMovement(neptune, "neptune", neptuneLoc);
-    running = setTimeout(solarSystem, delay);
+    mercuryLoc = planetMovement(mercury, "mercury", mercuryLoc, orbitDraw, move);
+    venusLoc = planetMovement(venus, "venus", venusLoc, orbitDraw, move);
+    earthLoc = planetMovement(earth, "earth", earthLoc, orbitDraw, move);
+    marsLoc = planetMovement(mars, "mars", marsLoc, orbitDraw, move);
+    jupiterLoc = planetMovement(jupiter, "jupiter", jupiterLoc, orbitDraw, move);
+    saturnLoc = planetMovement(saturn, "saturn", saturnLoc, orbitDraw, move);
+    uranusLoc = planetMovement(uranus, "uranus", uranusLoc, orbitDraw, move);
+    neptuneLoc = planetMovement(neptune, "neptune", neptuneLoc, orbitDraw, move);
+    //Shouldn't be any var or let here, so that this can be deleted
+    running = setTimeout(solarSystem.bind(move), delay);
+
 }
 
-//--------------------Here starts the functions for HTML stuffs----------\\
+
+
+
+
+//------------------------------------------------Here starts the functions for HTML stuffs--------------------------------------\\
 //Checks the change of delay while mouse is on slider
 function delayCheckStart() {
     speed = document.getElementById("speed").value;
@@ -223,8 +259,9 @@ function delayCheckEnd() {
 }
 
 //starts the programme
-function start() {
-    solarSystem();
+//In some cases people don't want things to move, so this check is needed
+function start(move) {
+    solarSystem(move);
     //This is needed so that there is only one button not two(start and pause)
     document.getElementById("switch").onclick = pause;
     document.getElementById("switch").innerHTML = "pause";
@@ -233,6 +270,7 @@ function start() {
 //pauses the programme
 function pause() {
     clearTimeout(running);
+    delete running;
     //This is needed so that there is only one button not two(start and pause)
     document.getElementById("switch").onclick = start;
     document.getElementById("switch").innerHTML = "start";
@@ -242,26 +280,48 @@ function pause() {
 //Where i += s * speed / THE PARAMETER;
 function fluencyCheck() {
     let check = document.getElementById("fluency");
+    //This turns the "high fluency" off as only one of them should work
+    let alikeItem = document.getElementById("highestFluency");
+    if (alikeItem.checked == true) {
+        alikeItem.checked = false;
+    } else {}
     if (check.checked == true) {
         fluency = highFluency;
     } else {
         fluency = defaultFluency;
     }
-    console.log(fluency)
 }
 
 function highestFluencyCheck() {
     let check = document.getElementById("highestFluency");
+    //This turns the "high fluency" off as only one of them should work
+    let alikeItem = document.getElementById("fluency");
+    if (alikeItem.checked == true) {
+        alikeItem.checked = false;
+    } else {}
     if (check.checked == true) {
         fluency = highestFluency;
     } else {
         fluency = defaultFluency;
     }
-    console.log(fluency)
 }
 
-
-
+//Check if the orbit switch has been turned on
+function orbitLines() {
+    let check = document.getElementById("orbitSwitch");
+    if (check.checked == true) {
+        orbitDraw = true;
+    } else {
+        orbitDraw = false;
+    }
+    //Only if the programme is not running(running == 'undefined')
+    //We need the start and pause function to "delete" the orbit lines
+    //Else we don't need that
+    if (typeof running == 'undefined') {
+        start(false);
+        pause();
+    } else {}
+}
 
 
 

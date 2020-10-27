@@ -12,6 +12,7 @@
     <!--Html elements-->
     <canvas id=myCanvas width=1500 height=1500></canvas>
 
+    <!--This class(div)contains every div in it(on the right side)-->
     <div class="main">
         <!--This div includes the switch-->
         <div class="one">
@@ -147,7 +148,7 @@
             <!--This div contains the advanced fluency setting and the text-->
             <div class="fluency">
                 <div>
-                    <p style="font-size:20px; color:#f08a5d; margin-right: 15px;">High fluency:</p>
+                    <p class="advancedText">High fluency:</p>
                 </div>
                 <div>
                     <label class="switch">
@@ -156,14 +157,26 @@
                     </label>
                 </div>
             </div>
-            <!--The HHHHHHighest fluency~~~-->
+            <!--The Highest Fluency~~~-->
             <div class="highestFluency">
                 <div>
-                    <p style="font-size:20px; color:#f08a5d; margin-right: 15px;">Highest fluency:</p>
+                    <p class="advancedText">Highest fluency:</p>
                 </div>
                 <div>
                     <label class="switch">
                         <input type="checkbox" id="highestFluency" onclick="highestFluencyCheck()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+            <!--the switch of orbit-->
+            <div class="orbit">
+                <div>
+                    <p class="advancedText">Orbit:</p>
+                </div>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" id="orbitSwitch" onclick="orbitLines()">
                         <span class="slider"></span>
                     </label>
                 </div>
@@ -173,6 +186,7 @@
 
 
     </div>
+
 
     <script src="js_code.js"></script>
 
